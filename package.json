@@ -1,0 +1,42 @@
+{
+  "name": "api-user",
+  "version": "1.0.0",
+  "description": "API backend for users",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "babel-node ./src/index.js",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpg-critical-error/api-user.git"
+  },
+  "keywords": [
+    "backend",
+    "api"
+  ],
+  "author": "Guilherme Marques Moreira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpg-critical-error/api-user/issues"
+  },
+  "homepage": "https://github.com/rpg-critical-error/api-user#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.14.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
+    "sequelize-cli": "^6.2.0"
+  }
+}
