@@ -1,5 +1,4 @@
-import sequelize, { BuildOptions, DataTypes } from 'sequelize';
-import { Model, Sequelize, DataType } from 'sequelize';
+import { BuildOptions, DataTypes, Model, Sequelize } from 'sequelize';
 
 interface User extends Model {
     readonly id: string;
@@ -16,7 +15,8 @@ type UserStatic = typeof Model & {
     new (values?: Partial<User>, options?: BuildOptions): User;
 };
 
-export function build(sequelize: Sequelize) {
+export default function build(sequelize: Sequelize) {
+    // eslint-disable-next-line no-shadow
     const User = sequelize.define(
         'user',
         {

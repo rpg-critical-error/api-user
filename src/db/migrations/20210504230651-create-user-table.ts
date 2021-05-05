@@ -1,6 +1,6 @@
 import { QueryInterface, DataTypes } from 'sequelize';
 
-export async function up(q: QueryInterface) {
+export default async function up(q: QueryInterface) {
     await q.createTable('users', {
         id: {
             type: DataTypes.INTEGER,

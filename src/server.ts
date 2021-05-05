@@ -18,17 +18,16 @@ export class Server {
     }
 
     setRoutes() {
-        this.app.get("/", (req, res) => {
-            res.send("Funcionando :)");
+        this.app.get('/', (req, res) => {
+            res.send('Funcionando :)');
         });
     }
 
     start() {
         this.app.listen(process.env.PORT, () => {
-            console.log(`App starts on http://localhost:${process.env.PORT}/`)
-        })
+            console.log(`App starts on http://localhost:${process.env.PORT}/`);
+        });
     }
-
 }
 
 export default new Server();
