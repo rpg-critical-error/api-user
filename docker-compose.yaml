@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+    web:
+        container_name: web_container
+        ports:
+            - ${PORT}:${PORT}
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        volumes:
+            - .:/src/app
+        # networks:
+        #     - service-bridge
+        environment:
+            NODE_ENV: ${NODE_ENV}
+            PORT: ${PORT}
+            HOST: ${HOST}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASS: ${DB_PASS}
+            DB_NAME: ${DB_NAME}
+            DIALECT: ${DIALECT}
+# networks:
+#     service-brige:
+#         name: service_bridge
+#         driver: bridge
