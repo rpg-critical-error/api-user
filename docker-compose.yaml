@@ -1,17 +1,34 @@
 version: "3.5"
 
 services:
+    postgres:
+        image: postgres:12.2
+        container_name: critical_error_postgres_container
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./.postgres-data:/var/lib/postgresql/data
+        networks:
+            - service-bridge
+        environment:
+            - DEBUG=false
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASS}
+            - TZ=America/Sao_Paulo
+
     web:
-        container_name: web_container
+        container_name: critical_error_web_container
         ports:
             - ${PORT}:${PORT}
         build:
             context: ./
             dockerfile: Dockerfile
+        depends_on:
+            - postgres
         volumes:
             - .:/src/app
-        # networks:
-        #     - service-bridge
+        networks:
+            - service-bridge
         environment:
             NODE_ENV: ${NODE_ENV}
             PORT: ${PORT}
@@ -20,7 +37,8 @@ services:
             DB_PASS: ${DB_PASS}
             DB_NAME: ${DB_NAME}
             DIALECT: ${DIALECT}
-# networks:
-#     service-brige:
-#         name: service_bridge
-#         driver: bridge
+
+networks:
+    service-bridge:
+        name: service_bridge
+        driver: bridge
