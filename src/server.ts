@@ -2,6 +2,9 @@ import Express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 
+/**
+ * Represents express server.
+ */
 export class Server {
     app = Express();
 
