@@ -5,7 +5,7 @@
   "main": "npm install -g npm",
   "scripts": {
     "build": "tsc",
-    "start": "node ./src/index.js",
+    "start": "node ./dist/index.js",
     "dev": "tsc -w & nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,0 +1,3 @@
+FROM nginx
+COPY ./sites/default_nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./sites/nginx.conf /etc/nginx/nginx.conf

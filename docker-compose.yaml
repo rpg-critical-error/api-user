@@ -13,13 +13,11 @@ services:
         environment:
             - DEBUG=false
             - POSTGRES_USER=${DB_USERNAME}
-            - POSTGRES_PASSWORD=${DB_PASS}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
             - TZ=America/Sao_Paulo
 
     web:
         container_name: critical_error_web_container
-        ports:
-            - ${PORT}:${PORT}
         build:
             context: ./
             dockerfile: Dockerfile
@@ -31,12 +29,30 @@ services:
             - service-bridge
         environment:
             NODE_ENV: ${NODE_ENV}
-            PORT: ${PORT}
+            PORT: 3000
             HOST: ${HOST}
             DB_USERNAME: ${DB_USERNAME}
-            DB_PASS: ${DB_PASS}
+            DB_PASS: ${DB_PASSWORD}
             DB_NAME: ${DB_NAME}
             DIALECT: ${DIALECT}
+
+    nginx:
+        container_name: critical_error_nginx_container
+        restart: always
+        build: ./nginx/
+        volumes:
+            - /www/public
+        expose:
+            - "80"
+        depends_on:
+            - web
+            - postgres
+        ports:
+            - 80:80
+        networks:
+            - service-bridge
+        links:
+            - web
 
 networks:
     service-bridge:
