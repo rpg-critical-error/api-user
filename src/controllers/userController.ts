@@ -5,7 +5,16 @@ import bcrypt from 'bcrypt';
 
 const User = models.User;
 
+/**
+ * This class is the controller for the User.
+ */
 export class UserController {
+    /**
+     * Get all users.
+     * @async
+     * @param  {Request} req
+     * @param  {Response} res
+     */
     async get(req: Request, res: Response) {
         try {
             const user = await User.findAll({
@@ -20,7 +29,12 @@ export class UserController {
             return res.json({ error: e.message }).status(400);
         }
     }
-
+    /**
+     * Get one specific user.
+     * @async
+     * @param  {Request} req
+     * @param  {Response} res
+     */
     async getOne(req: Request, res: Response) {
         try {
             const { id } = req.params;
@@ -34,6 +48,12 @@ export class UserController {
         }
     }
 
+    /**
+     * Store one user.
+     * @async
+     * @param  {Request} req
+     * @param  {Response} res
+     */
     async store(req: Request, res: Response) {
         try {
             const data = req.body;
@@ -58,10 +78,16 @@ export class UserController {
         }
     }
 
+    /**
+     * This function is used for get token for authorization.
+     * @async
+     * @param  {Request} req
+     * @param  {Response} res
+     */
     async auth(req: Request, res: Response) {
         try {
             const data = req.body;
-            console.log(data);
+
             const user = await User.findOne({
                 where: {
                     email: data?.email,
@@ -77,15 +103,16 @@ export class UserController {
                     .json({ error: 'Credentials are incorrect!' })
                     .status(404);
             }
-            const payload = Object.assign(
-                {},
-                {
-                    id: user.id,
-                    email: user.nickname,
-                }
-            );
+            const payload = {
+                id: user.id,
+                email: user.nickname,
+                type: 'user',
+            };
+
+            const expiresIn = data.continue ? '7d' : '1d';
+
             const token = jwt.sign(payload, process.env.SECRET || '', {
-                expiresIn: '1d',
+                expiresIn,
             });
             return res.json({ token, name: user.name, email: user.email });
         } catch (e) {

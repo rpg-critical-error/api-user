@@ -1,6 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi, { ObjectSchema } from 'joi';
 
+/**
+ * This is the generic functions for
+ * @param  {Request} request
+ * @param  {Response} response
+ * @param  {NextFunction} next
+ * @param  {ObjectSchema} schema
+ */
 const validateRequest = (
     request: Request,
     response: Response,
@@ -34,6 +41,12 @@ const validateRequest = (
     return response.status(422).json(JoiError);
 };
 
+/**
+ * Middleware that validate user body input.
+ * @param  {Request} request
+ * @param  {Response} response
+ * @param  {NextFunction} next
+ */
 export const UserValidator = (
     request: Request,
     response: Response,
