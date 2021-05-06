@@ -1,14 +1,12 @@
+import { genSaltSync, hashSync } from 'bcrypt';
 import { BuildOptions, DataTypes, Model, Sequelize } from 'sequelize';
 
-interface User extends Model {
+export interface User extends Model {
     readonly id: string;
     name: string;
     nickname: string;
     email: string;
     password: string;
-    created_at: Date;
-    deleted_at: Date;
-    updated_at: Date;
 }
 
 type UserStatic = typeof Model & {
@@ -49,9 +47,22 @@ export default function build(sequelize: Sequelize) {
             },
         },
         {
-            timestamps: true,
+            timestamps: false,
             underscored: true,
-            paranoid: true,
+            hooks: {
+                beforeCreate: (user: User) => {
+                    if (user.password) {
+                        const salt = genSaltSync();
+                        user.password = hashSync(user.password, salt);
+                    }
+                },
+                beforeUpdate: (user: User) => {
+                    if (user.password) {
+                        const salt = genSaltSync();
+                        user.password = hashSync(user.password, salt);
+                    }
+                },
+            },
         }
     ) as UserStatic;
     return User;

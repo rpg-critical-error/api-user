@@ -1,6 +1,7 @@
 import Express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
+import router from './routers';
 
 /**
  * Represents express server.
@@ -15,12 +16,14 @@ export class Server {
 
     setMiddleware() {
         this.app.use(cors());
+        this.app.use(Express.json());
     }
 
     setRoutes() {
         this.app.get('/', (req, res) => {
             res.send('Funcionando :)');
         });
+        this.app.use(router);
     }
 
     start() {

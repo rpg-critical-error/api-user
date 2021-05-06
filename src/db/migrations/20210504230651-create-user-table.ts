@@ -1,6 +1,6 @@
 import { QueryInterface, DataTypes } from 'sequelize';
 
-export default async function up(q: QueryInterface) {
+export async function up(q: QueryInterface) {
     await q.createTable('users', {
         id: {
             type: DataTypes.INTEGER,
@@ -30,4 +30,8 @@ export default async function up(q: QueryInterface) {
             defaultValue: false,
         },
     });
+}
+
+export async function down(q: QueryInterface) {
+    await q.dropTable('users');
 }
